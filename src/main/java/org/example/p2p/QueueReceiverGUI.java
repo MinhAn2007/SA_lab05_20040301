@@ -14,6 +14,7 @@ public class QueueReceiverGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private ConnectionFactory factory;
     private Destination destination;
+    private JTextArea messageArea;
 
     public QueueReceiverGUI() {
         setTitle("Message Receiver");
@@ -21,7 +22,7 @@ public class QueueReceiverGUI extends JFrame {
         setSize(400, 300);
         setLocationRelativeTo(null);
 
-        JTextArea messageArea = new JTextArea();
+        messageArea = new JTextArea();
         messageArea.setEditable(false);
 
         JScrollPane scrollPane = new JScrollPane(messageArea);
@@ -30,10 +31,10 @@ public class QueueReceiverGUI extends JFrame {
 
         setVisible(true);
 
-        initializeJMS(messageArea);
+        initializeJMS();
     }
 
-    private void initializeJMS(JTextArea messageArea) {
+    private void initializeJMS() {
         try {
             BasicConfigurator.configure();
 
@@ -50,27 +51,31 @@ public class QueueReceiverGUI extends JFrame {
             Connection connection = factory.createConnection("admin", "admin");
             connection.start();
 
-            Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             MessageConsumer consumer = session.createConsumer(destination);
 
-            // Nhận tin nhắn chỉ một lần
-            Message message = consumer.receive();
-            if (message instanceof TextMessage) {
-                TextMessage textMessage = (TextMessage) message;
-                String text = textMessage.getText();
-                messageArea.append("Received: " + text + "\n");
-            } else if (message instanceof ObjectMessage) {
-                ObjectMessage objectMessage = (ObjectMessage) message;
-                System.out.println(objectMessage);
-            }
-            session.close();
-            connection.close();
+            consumer.setMessageListener(new MessageListener() {
+                @Override
+                public void onMessage(Message message) {
+                    try {
+                        if (message instanceof TextMessage) {
+                            TextMessage textMessage = (TextMessage) message;
+                            String text = textMessage.getText();
+                            messageArea.append("Received: " + text + "\n");
+                        } else if (message instanceof ObjectMessage) {
+                            ObjectMessage objectMessage = (ObjectMessage) message;
+                            System.out.println(objectMessage);
+                        }
+                    } catch (JMSException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
