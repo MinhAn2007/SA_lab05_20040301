@@ -28,28 +28,66 @@ Thêm các phụ thuộc sau vào tệp cấu hình của dự án:
 
 Run class QueueReceiver 
 
-![img.png](img.png)
+![img.png](img/img.png)
 
 Sau đó sẽ nhận được 1 GUI 
 
-![img_1.png](img_1.png)
+![img_1.png](img/img_1.png)
 
 Run class QueueSender
 
-![img_2.png](img_2.png)
+![img_2.png](img/img_2.png)
 
 Sau đó sẽ nhận được 1 GUI
 
-![img_3.png](img_3.png)
+![img_3.png](img/img_3.png)
 
 Tiếp theo bạn có thể chat ở phần sender và bấm send: 
 
-![img_4.png](img_4.png)
+![img_4.png](img/img_4.png)
 
 Phần chat từ sender sẽ được cập nhật lại
 
+![img_5.png](img/img_5.png)
+
+### Demo mô hình publish subscribe minh họa cho mô hình gửi nhận bằng JAVA
+
+Run class TopicPublisher ,Run class TopicSubscriber
+
+![img.png](img.png) 
+
+Sau đó sẽ nhận được 1 GUI
+
+Bạn có thể gửi 1 message ở đây và bấm xem
+
+![img_1.png](img_1.png)
+
+Bạn sẽ nhận được một message ở Subscriber
+
+![img_2.png](img_2.png)
+
+### Demo chương trình group chat và chat client bằng JAVA
+
+Ở đây mình hoa có 2 client
+
+Run class ChatServer
+
+![img_3.png](img_3.png)
+
+Bạn sẽ nhận được thông báo là chươn trình đã chạy
+
+Run class ChatClient
+
+Run class ChatClient2
+
+![img_4.png](img_4.png)
+
+Sau đó bạn có thể thực hiện chat giữa 2 client và có thể tạo thêm 1 số client để  test từ 2 client cơ bản 
+
 ![img_5.png](img_5.png)
 
+![img_6.png](img_6.png)
 
+![img_7.png](img_7.png)
 
 
